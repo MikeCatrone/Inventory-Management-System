@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-header">New Category</div>
                 <div class="card-body">
+
                     <form method="POST" action="{{ route('categories.store') }}">
                         @csrf
 
@@ -33,6 +34,7 @@
                             <a href="{{ route('categories.index') }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>

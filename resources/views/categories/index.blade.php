@@ -22,7 +22,6 @@
                         <tr>
                             <th>#</th>
                             <th>Category</th>
-                            <th>Item</th>
                             <th></th>
                         </tr>
                     </thead>
