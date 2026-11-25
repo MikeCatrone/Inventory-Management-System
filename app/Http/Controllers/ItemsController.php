@@ -38,16 +38,49 @@ class ItemsController extends Controller
 
     public function store(Request $request)
     {
+        // Check that every field is filled out and has valid data
         $validated = $request->validate([
-            'category' => ['required', 'string', 'max:50', 'unique:categories,category'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'], // Must match an existing category
+            'title'       => ['required', 'string', 'max:255'],              // Item title (up to 255 letters)
+            'description' => ['required', 'string'],                       // Item description
+            'price'       => ['required', 'numeric', 'min:0'],               // Price (0 or higher)
+            'quantity'    => ['required', 'integer', 'min:0'],               // Stock count (0 or higher)
+            'sku'         => ['required', 'string', 'max:255'],              // SKU code (up to 255 letters)
+            'picture'     => ['required', 'file', 'image', 'max:5120'],      // Image file (up to 5 MB)
         ]);
 
-        Categories::create($validated);
+        
+        // Get the uploaded image from the form
+        $file = $request->file('picture');
 
+
+        // Give the image a unique file name so files don't overwrite each other
+        $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+
+        // Save the image file into the public/images folder
+        $file->move(public_path('images'), $filename);
+
+
+        // Save the new item and its image path in the database
+        Items::create([
+            'category_id' => $validated['category_id'],
+            'title'       => $validated['title'],
+            'description' => $validated['description'],
+            'price'       => $validated['price'],
+            'quantity'    => $validated['quantity'],
+            'sku'         => $validated['sku'],
+            'picture'     => 'images/' . $filename,
+        ]);
+
+
+        // Go back to the items list page with a success message
         return redirect()
-            ->route('categories.index')
-            ->with('status', 'Category created.');
-        }
+            ->route('items.index')
+            ->with('status', 'Item created.');
+
+
+    }
 
 
 
