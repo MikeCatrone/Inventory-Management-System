@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Items;
-use App\Models\Categories;
 
+use App\Models\Categories;
+use App\Models\Items;
 use Illuminate\Http\Request;
 
 class ItemsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -15,7 +16,8 @@ class ItemsController extends Controller
 
     public function index()
     {
-        $items = Items::orderBy('category')->get(); // Company model
+        $items = Items::with('category')->orderBy('title')->get();
+
         return view('items.index', compact('items'));
     }
 
@@ -25,10 +27,11 @@ class ItemsController extends Controller
      * Show the form for creating a new resource.
      */
 
-
     public function create()
     {
-        return view('items.create');
+        $categories = Categories::orderBy('category')->get();
+
+        return view('items.create', compact('categories'));
     }
 
 
@@ -37,7 +40,7 @@ class ItemsController extends Controller
      * Store a newly created resource in storage.
      */
 
-
+    
     public function store(Request $request)
     {
         // Check that every field is filled out and has valid data
@@ -51,18 +54,14 @@ class ItemsController extends Controller
             'picture'     => ['required', 'file', 'image', 'max:5120'],      // Image file (up to 5 MB)
         ]);
 
-        
         // Get the uploaded image from the form
         $file = $request->file('picture');
-
 
         // Give the image a unique file name so files don't overwrite each other
         $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-
         // Save the image file into the public/images folder
         $file->move(public_path('images'), $filename);
-
 
         // Save the new item and its image path in the database
         Items::create([
@@ -75,13 +74,10 @@ class ItemsController extends Controller
             'picture'     => 'images/' . $filename,
         ]);
 
-
         // Go back to the items list page with a success message
         return redirect()
             ->route('items.index')
             ->with('status', 'Item created.');
-
-
     }
 
 
@@ -89,6 +85,7 @@ class ItemsController extends Controller
     /**
      * Display the specified resource.
      */
+
 
     public function show(string $id)
     {
@@ -123,6 +120,7 @@ class ItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
 
     public function destroy(string $id)
     {
