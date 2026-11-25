@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Items;
+use App\Models\Categories;
 
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class ItemsController extends Controller
     public function index()
     {
         $items = Items::orderBy('category')->get(); // Company model
-        return view('items.index', compact('categories'));
+        return view('items.index', compact('items'));
     }
 
 

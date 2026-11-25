@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ItemsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,6 +16,10 @@ Auth::routes();
 
 // Categories Route
 Route::resource('categories', CategoriesController::class);
+
+
+// Items Route
+Route::resource('items', ItemsController::class);
 
 
 

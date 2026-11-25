@@ -13,7 +13,7 @@
                     <hr class="my-4">
                     <div class="d-flex justify-content-center gap-3">
                         <a class="btn btn-primary btn-lg px-4" href="{{ route('categories.index') }}">Categories Page</a>
-                        <a class="btn btn-outline-secondary btn-lg px-4" href="{{ route('register') }}">Items Page</a>
+                        <a class="btn btn-outline-secondary btn-lg px-4" href="{{ route('items.index') }}">Items Page</a>
                     </div>
                 </div>
             </div>
