@@ -47,9 +47,7 @@
                     --}}
 
 
-                    <td><div style="float:left;">
-                        <a href="{{ route('categories.show', $category) }}"class="btn btn-primary btn-sm">View</a>
-                    </div>
+                    <td>
 
                     <div style="float:left; margin-left:5px;">
                         <a href="{{ route('categories.edit', $category) }}"class="btn btn-success btn-sm">Edit</a>

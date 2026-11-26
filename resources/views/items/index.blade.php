@@ -52,9 +52,7 @@
                                     <td>${{ number_format((float) $item->price, 2) }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>
-                                        <div style="float:left;">
-                                            <a href="{{ route('items.show', $item) }}" class="btn btn-primary btn-sm">View</a>
-                                        </div>
+                                        
 
                                         <div style="float:left; margin-left:5px;">
                                             <a href="{{ route('items.edit', $item) }}" class="btn btn-success btn-sm">Edit</a>
